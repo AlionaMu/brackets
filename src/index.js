@@ -1,26 +1,20 @@
 module.exports = function check(str, bracketsConfig) {
-  let x;
-  let y = '';
+  let left = [];
+  let right = [];
+  
   for (let i = 0;  i < bracketsConfig.length; i++) {
-    x = bracketsConfig[i];
-     for (let k = 0; k < x.length; k++) {
-       y += x[k]
-     }
+    let x = bracketsConfig[i]
+    left.push(x[0]);
+    right.push(x[1]); 
   }
-  if ( y  == str) {
-    return true
-  }
-  else {
-    let openingBrackets = ['[', '{', '(']
-    let closingBrackets = [']', '}', ')']
     let stack = []
   
     for (let i = 0; i < str.length; i++) {
       let ch = str[i]
-      if (closingBrackets.indexOf(ch) > -1) {
-        matchingOpeningBracket = openingBrackets[closingBrackets.indexOf(ch)]
+      if (right.indexOf(ch) > -1) {
+        matchingOpeningBracket = left[right.indexOf(ch)]
         if (stack.length == 0 || (stack.pop() != matchingOpeningBracket)) {
-          return false
+          stack.push(ch)
         }
       } else {
         stack.push(ch)
@@ -40,5 +34,4 @@ module.exports = function check(str, bracketsConfig) {
      if (fin.length == 0) {return true}
      else {return false}
   }
-}
 }
